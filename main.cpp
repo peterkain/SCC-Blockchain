@@ -9,11 +9,11 @@ using namespace std;
 struct Node
 {
     Node() {}
-    Node(const string& id, const unsigned& hash_rate)
+    Node(const string& id, const int& hash_rate)
         :   id{id}, hash_rate{hash_rate} {}
 
     string id;
-    unsigned hash_rate;
+    int hash_rate;
 };
 unsigned operator+(const int& l, const Node& r) { return l + r.hash_rate; }
 
@@ -60,8 +60,11 @@ private:
 
 vector<string> load_words(const string& filename)
 {
-    string word; vector<string> result;
-    while(ifstream{filename} >> word) result.push_back(word);
+    ifstream file {filename};
+    vector<string> result;
+    string word;
+
+    while(file >> word) result.push_back(word);
     return result;
 }
 
@@ -75,7 +78,7 @@ Node find_id(const vector<Node>& nodes, const string& id)
 int main()
 {
     ofstream file {"output.txt"};
-    for(int files {1}; files++ < 5;)
+    for(int files {1}; files < 5; files++)
     {
         Network network;
         vector<string> content = load_words("level1-" + to_string(files) + ".txt");
